@@ -18,9 +18,6 @@ export class CreateBookDto {
   @IsNotEmpty()
   genre: string;
 
-  @IsDate()
-  datePublished: Date;
-
   @IsNumber()
   @IsPositive()
   rating: number;
