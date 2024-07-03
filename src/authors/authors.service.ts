@@ -22,7 +22,8 @@ export class AuthorsService {
     return filteredAuthors;
   }
 
-  getAuthor(id: number) {
+  getAuthor(id: string) {
+    console.log(id);
     const authorIndex = this.authors.findIndex((author) => author.id === id);
 
     if (authorIndex === -1) {
@@ -33,9 +34,11 @@ export class AuthorsService {
   }
 
   createAuthor(createAuthorDto: CreateAuthorDto) {
+    const uid = () => String(Date.now().toString(32) + Math.random().toString(16)).replace(/\./g, '');
+    console.log(uid());
     const newAuthor = {
       ...createAuthorDto,
-      id: Date.now(),
+      id: uid(),
     };
 
     this.authors.push(newAuthor);
@@ -43,7 +46,7 @@ export class AuthorsService {
     return newAuthor;
   }
 
-  updateAuthor(id: number, updateAuthorDto: CreateAuthorDto) {
+  updateAuthor(id: string, updateAuthorDto: CreateAuthorDto) {
     const authorIndex = this.authors.findIndex((author) => author.id === id);
 
     if (authorIndex === -1) {
@@ -58,7 +61,7 @@ export class AuthorsService {
     return this.authors[authorIndex];
   }
 
-  deleteAuthor(id: number) {
+  deleteAuthor(id: string) {
     const authorToRemove = this.getAuthor(id);
     const authorIndex = this.authors.findIndex((author) => author.id === id);
 
