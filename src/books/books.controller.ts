@@ -18,7 +18,7 @@ export class BooksController {
 
   @Get(':id')
   getBook(@Param('id') id: string) {
-    return this.booksService.getBook(+id);
+    return this.booksService.getBook(id);
   }
 
   @Post()
@@ -28,12 +28,12 @@ export class BooksController {
 
   @Put(':id')
   updateBook(@Param('id') id: string, @Body() updateBookDto: UpdateBookDto) {
-    return this.booksService.updateBook(+id, updateBookDto);
+    return this.booksService.updateBook(id, updateBookDto);
   }
 
   @Delete(':id')
   deleteBook(@Param('id') id: string) {
-    return this.booksService.deleteBook(+id);
+    return this.booksService.deleteBook(id);
   }
 
 }
