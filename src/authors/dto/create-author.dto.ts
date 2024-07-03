@@ -1,8 +1,7 @@
-import { IsNumber, IsString, IsDate, IsNotEmpty, IsPositive } from 'class-validator';
+import { IsNumber, IsString, IsDate, IsNotEmpty, IsPositive, Min, Max } from 'class-validator';
 
 export class CreateAuthorDto {
-  @IsNumber()
-  id: number;
+  id: string;
 
   @IsString()
   @IsNotEmpty()
@@ -14,13 +13,9 @@ export class CreateAuthorDto {
 
   genres?: string[];
 
-  @IsDate()
-  dateOfBirth?: Date;
-
-  @IsDate()
-  dateOfDeath?: Date;
-
   @IsNumber()
   @IsPositive()
+  @Min(0)
+  @Max(5)
   averageRating?: number;
 }
