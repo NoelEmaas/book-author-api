@@ -1,4 +1,4 @@
-import { Body, Delete, Get, Param, Post, Put } from '@nestjs/common';
+import { Body, Delete, Get, Param, Post, Put, ValidationPipe } from '@nestjs/common';
 import { Controller, Query } from '@nestjs/common';
 import { BooksService } from './books.service';
 import { CreateBookDto } from './dto/create-book.dto';
@@ -22,12 +22,12 @@ export class BooksController {
   }
 
   @Post()
-  createBook(@Body() createBookDto: CreateBookDto) {
+  createBook(@Body(new ValidationPipe()) createBookDto: CreateBookDto) {
     return this.booksService.createBook(createBookDto);
   }
 
   @Put(':id')
-  updateBook(@Param('id') id: string, @Body() updateBookDto: UpdateBookDto) {
+  updateBook(@Param('id') id: string, @Body(new ValidationPipe()) updateBookDto: UpdateBookDto) {
     return this.booksService.updateBook(id, updateBookDto);
   }
 
