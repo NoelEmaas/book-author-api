@@ -21,7 +21,7 @@ export class BooksService {
     return filteredBooks;
   }
 
-  getBook(id: number) {
+  getBook(id: string) {
     const bookIndex = this.books.findIndex((book) => book.id === id);
 
     if (bookIndex === -1) {
@@ -32,9 +32,10 @@ export class BooksService {
   }
 
   createBook(createBookDto: CreateBookDto) {
+    const uid = () => String(Date.now().toString(32) + Math.random().toString(16)).replace(/\./g, '');
     const newBook = {
       ...createBookDto,
-      id: Date.now(),
+      id: uid(),
     };
 
     this.books.push(newBook);
@@ -42,7 +43,7 @@ export class BooksService {
     return newBook;
   }
 
-  updateBook(id: number, updateBookDto: UpdateBookDto) {
+  updateBook(id: string, updateBookDto: UpdateBookDto) {
     const bookIndex = this.books.findIndex((book) => book.id === id);
 
     if (bookIndex === -1) {
@@ -57,7 +58,7 @@ export class BooksService {
     return this.books[bookIndex];
   }
 
-  deleteBook(id: number) {
+  deleteBook(id: string) {
     const bookToRemove = this.getBook(id);
     const bookIndex = this.books.findIndex((book) => book.id === id);
 
