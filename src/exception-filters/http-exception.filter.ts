@@ -8,6 +8,13 @@ export class HttpExceptionFilter implements ExceptionFilter {
     const response = ctx.getResponse<Response>();
     const request = ctx.getRequest<Request>();
     const status = exception.getStatus();
+    const errorDetails = exception.getResponse();
+
+    if (errorDetails['error']) {
+      errorDetails['type'] = errorDetails['error'];
+      delete errorDetails['error'];
+      delete errorDetails['statusCode'];
+    }
 
     response
       .status(status)
@@ -15,6 +22,7 @@ export class HttpExceptionFilter implements ExceptionFilter {
         statusCode: status,
         timestamp: new Date().toISOString(),
         path: request.url,
+        error: errorDetails,
       });
   }
 }
