@@ -35,5 +35,47 @@
       "genres": ["Horror", "Suspense"],
       "averageRating": 3.5
     }
+  ],
+  "books": [
+    {
+      "id": "1",
+      "authorIds": ["a1", "a2"],
+      "title": "The Great Adventure",
+      "description": "An exhilarating journey through uncharted lands.",
+      "genre": "Adventure",
+      "rating": 4.8
+    },
+    {
+      "id": "2",
+      "authorIds": ["a3"],
+      "title": "Mystery of the Lost City",
+      "description": "A detective story that uncovers the secrets of an ancient civilization.",
+      "genre": "Mystery",
+      "rating": 4.5
+    },
+    {
+      "id": "3",
+      "authorIds": ["a1", "a4"],
+      "title": "Romance in Paris",
+      "description": "A romantic tale set in the city of love.",
+      "genre": "Romance",
+      "rating": 4.7
+    },
+    {
+      "id": "4",
+      "authorIds": ["a2"],
+      "title": "Science of the Future",
+      "description": "Exploring futuristic scientific discoveries and their implications.",
+      "genre": "Science Fiction",
+      "rating": 4.6
+    },
+    {
+      "id": "5",
+      "authorIds": ["a5", "a6"],
+      "title": "History of Ancient Rome",
+      "description": "A comprehensive study of the rise and fall of the Roman Empire.",
+      "genre": "History",
+      "rating": 4.9
+    }
   ]
 }
