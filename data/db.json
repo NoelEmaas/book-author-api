@@ -1,0 +1,39 @@
+{
+  "authors": [
+    {
+      "id": "1",
+      "fullName": "John Smith",
+      "penName": "J. Smith",
+      "genres": ["Fiction", "Adventure"],
+      "averageRating": 4.5
+    },
+    {
+      "id": "2",
+      "fullName": "Jane Doe",
+      "penName": "J. Doe",
+      "genres": ["Mystery", "Thriller"],
+      "averageRating": 3.9
+    },
+    {
+      "id": "3",
+      "fullName": "Emily Johnson",
+      "penName": "E. Johnson",
+      "genres": ["Romance", "Drama"],
+      "averageRating": 4.2
+    },
+    {
+      "id": "4",
+      "fullName": "Michael Brown",
+      "penName": "M. Brown",
+      "genres": ["Fiction", "Fantasy"],
+      "averageRating": 4.8
+    },
+    {
+      "id": "5",
+      "fullName": "Linda Wilson",
+      "penName": "L. Wilson",
+      "genres": ["Horror", "Suspense"],
+      "averageRating": 3.5
+    }
+  ]
+}
