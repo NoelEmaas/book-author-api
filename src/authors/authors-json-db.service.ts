@@ -7,7 +7,7 @@ import * as path from 'path';
 
 @Injectable()
 export class AuthorsJsonDBService {
-  private filePath =  path.join(process.cwd(), 'data', 'authors.json');
+  private filePath =  path.join(process.cwd(), 'data', 'db.json');
   private authors = [];
 
   constructor() {
@@ -56,9 +56,9 @@ export class AuthorsJsonDBService {
     this.authors.splice(authorIndex, 1);
   }
 
-  private loadAuthorsFromJSON() {
-    return fs.readFile(this.filePath, 'utf-8').then((data) => {
-      this.authors = JSON.parse(data);
-    });
+  private async loadAuthorsFromJSON() {
+    const fileData = await fs.readFile(this.filePath, 'utf-8');
+    const jsonData = JSON.parse(fileData);
+    this.authors = jsonData.authors;
   }
 }
