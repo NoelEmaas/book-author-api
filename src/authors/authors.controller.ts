@@ -16,7 +16,6 @@ export class AuthorsController {
     @Query('genres') genres: string[],
     @Query('averageRating') averageRating: number,
   ) {
-    console.log(genres);
     return this.authorsService.getAuthors({ search, genres, averageRating });
   }
 
