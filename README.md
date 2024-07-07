@@ -28,26 +28,25 @@ $ npm run start:prod
 The API exposes the following endpoints:
 
 ### Books
-| Endpoint | Information |
-| :--- | :--- |
-| `GET /books` | Get all books. |
-| `GET /books/:id` | Get specific book by ID. |
-| `POST /books` | Create new book. |
-| `PUT /books/:id` | Update existing book by ID. |
-| `DELETE /books/:id` | Delete existing book by ID. |
-| `POST /books/:id/authors` | Add author to a book by ID. |
-| `DELETE /books/:id/authors` | Delete author from a book by ID. |
+| Endpoint | Method | Request Body | Information |
+| :--- | :--- | :--- | :--- |
+| `/books` | GET | - | Get all books. |
+| `/books/:id` | GET | - | Get specific book by ID. |
+| `/books` | POST | `{ "title": "string", "description": "string", "authorIds": ["string"] }` | Create new book. |
+| `/books/:id` | PUT | `{ "title": "string", "description": "string", "authorIds": ["string"] }` | Update existing book by ID. |
+| `/books/:id` | DELETE | - | Delete existing book by ID. |
+| `/books/:id/authors` | POST | `{ "authorId": "string" }` | Add author to a book by ID. |
+| `/books/:id/authors` | DELETE | `{ "authorId": "string" }` | Delete author from a book by ID. |
 
 ### Authors
-| Endpoint | Information |
-| :--- | :--- |
-| `GET /authors` | Get all authors. |
-| `GET /authors/:id` | Get specific author by ID. |
-| `GET /authors/:id/books` | Get all authored books by author's ID. |
-| `POST /authors` | Create new author. |
-| `PUT /authors/:id` | Update existing author by ID. |
-| `DELETE /authors/:id` | Delete existing author by ID. |
-
+| Endpoint | Method | Request Body | Information |
+| :--- | :--- | :--- | :--- |
+| `/authors` | GET | - | Get all authors. |
+| `/authors/:id` | GET | - | Get specific author by ID. |
+| `/authors/:id/books` | GET | - | Get all authored books by author's ID. |
+| `/authors` | POST | `{ "name": "string", "bio": "string" }` | Create new author. |
+| `/authors/:id` | PUT | `{ "name": "string", "bio": "string" }` | Update existing author by ID. |
+| `/authors/:id` | DELETE | - | Delete existing author by ID. |
 
 ## Structure & Logic
 ![diagram-export-7-7-2024-11_07_19-PM](https://github.com/NoelEmaas/book-author-api/assets/90034393/603cb94c-dde3-4dd7-8047-dd8d295fa959)
