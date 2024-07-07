@@ -1,18 +1,23 @@
-import { Body, Controller, Get, Query, Post, Put, Delete, ValidationPipe, Param } from '@nestjs/common';
+import { Body, Controller, Get, Query, Post, Put, Delete, ValidationPipe, Param, Inject } from '@nestjs/common';
 import { AuthorsService } from './authors.service';
+import { AuthorsServiceBase } from './authors-abstract.service';
 import { CreateAuthorDto } from './dto/create-author.dto';
 
 @Controller('authors')
 export class AuthorsController {
-  constructor(private readonly authorsService: AuthorsService) {}
+  constructor(
+    @Inject(AuthorsService)
+    private readonly authorsService: AuthorsServiceBase
+  ) {}
 
   @Get()
   getAuthors(
     @Query('search') search: string,
-    @Query('genre') genre: string,
+    @Query('genres') genres: string[],
     @Query('averageRating') averageRating: number,
   ) {
-    return this.authorsService.getAuthors({ search, genre, averageRating });
+    console.log(genres);
+    return this.authorsService.getAuthors({ search, genres, averageRating });
   }
 
   @Get(':id')
@@ -26,12 +31,12 @@ export class AuthorsController {
   }
 
   @Put(':id')
-  updateAuthor(@Query('id') id: string, @Body(new ValidationPipe()) updateAuthorDto: CreateAuthorDto) {
+  updateAuthor(@Param('id') id: string, @Body(new ValidationPipe()) updateAuthorDto: CreateAuthorDto) {
     return this.authorsService.updateAuthor(id, updateAuthorDto);
   }
 
   @Delete(':id')
-  deleteAuthor(@Query('id') id: string) {
+  deleteAuthor(@Param('id') id: string) {
     return this.authorsService.deleteAuthor(id);
   }
 }
