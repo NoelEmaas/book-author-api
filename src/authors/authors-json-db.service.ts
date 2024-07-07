@@ -1,18 +1,11 @@
 import { AuthorType } from 'src/types/author.types';
 import { CreateAuthorDto, UpdateAuthorDto } from './dto';
+import { generateID, loadDataFromJSON } from 'src/lib/utils';
 import { Injectable } from '@nestjs/common';
-
-import * as fs from 'fs/promises';
-import * as path from 'path';
 
 @Injectable()
 export class AuthorsJsonDBService {
-  private filePath =  path.join(process.cwd(), 'data', 'db.json');
-  private authors = [];
-
-  constructor() {
-    this.loadAuthorsFromJSON();
-  }
+  private authors = loadDataFromJSON<AuthorType>('authors');
 
   getAll({ search, genres, averageRating }: Partial<AuthorType> & { search?: string }): AuthorType[] {
     const filteredAuthors = this.authors.filter((author) => {
@@ -31,10 +24,9 @@ export class AuthorsJsonDBService {
   }
 
   create(createAuthorDto: CreateAuthorDto): AuthorType {
-    const uid = () => String(Date.now().toString(32) + Math.random().toString(16)).replace(/\./g, '');
     const newAuthor = {
       ...createAuthorDto,
-      id: uid(),
+      id: generateID(),
     };
 
     this.authors.push(newAuthor);
@@ -56,9 +48,4 @@ export class AuthorsJsonDBService {
     this.authors.splice(authorIndex, 1);
   }
 
-  private async loadAuthorsFromJSON() {
-    const fileData = await fs.readFile(this.filePath, 'utf-8');
-    const jsonData = JSON.parse(fileData);
-    this.authors = jsonData.authors;
-  }
 }
