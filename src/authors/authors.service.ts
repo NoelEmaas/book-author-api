@@ -1,76 +1,49 @@
-import { Injectable } from '@nestjs/common';
-import { CreateAuthorDto } from './dto/create-author.dto';
-
-interface AuthorFilter {
-  search?: string;
-  genre?: string;
-  averageRating?: number;
-}  
+import { AuthorsJsonDBService } from './authors-json-db.service';  
+import { AuthorsServiceBase } from './authors-abstract.service';
+import { AuthorType } from 'src/types/author.types';
+import { CreateAuthorDto, UpdateAuthorDto } from './dto';
+import { Injectable, NotFoundException } from '@nestjs/common';
 
 @Injectable()
-export class AuthorsService {
-  private authors = [];
+export class AuthorsService implements AuthorsServiceBase {
+  constructor(private readonly authorsJsonDBservice: AuthorsJsonDBService) {}
 
-  getAuthors({ search, genre, averageRating }: AuthorFilter) {
-    const filteredAuthors = this.authors.filter((author) => {
-      const matchedSearch = search ? author.fullName.includes(search) || author.penName.includes(search) : true;
-      const matchedGenre = genre ? author.genres.includes(genre) : true;
-      const matchedRating = averageRating ? author.averageRating === averageRating : true;
-      return matchedGenre && matchedRating && matchedSearch;
-    });
-
-    return filteredAuthors;
+  getAuthors(authorFilter: Partial<AuthorType> & { search?: string }): AuthorType[] {
+    return this.authorsJsonDBservice.getAll(authorFilter);
   }
 
-  getAuthor(id: string) {
-    console.log(id);
-    const authorIndex = this.authors.findIndex((author) => author.id === id);
+  getAuthor(id: string): AuthorType {
+    const author = this.authorsJsonDBservice.get(id);
 
-    if (authorIndex === -1) {
-      throw new Error('Author not found');
+    if (!author) {
+      throw new NotFoundException('Author you are trying to get does not exist');
     }
 
-    return this.authors[authorIndex];
+    return author;
   }
 
-  createAuthor(createAuthorDto: CreateAuthorDto) {
-    const uid = () => String(Date.now().toString(32) + Math.random().toString(16)).replace(/\./g, '');
-    console.log(uid());
-    const newAuthor = {
-      ...createAuthorDto,
-      id: uid(),
-    };
-
-    this.authors.push(newAuthor);
-
-    return newAuthor;
+  createAuthor(createAuthorDto: CreateAuthorDto): AuthorType {
+    return this.authorsJsonDBservice.create(createAuthorDto);
   }
 
-  updateAuthor(id: string, updateAuthorDto: CreateAuthorDto) {
-    const authorIndex = this.authors.findIndex((author) => author.id === id);
+  updateAuthor(id: string, updateAuthorDto: UpdateAuthorDto): AuthorType {
+    const authorToUpdate = this.authorsJsonDBservice.get(id);
 
-    if (authorIndex === -1) {
-      throw new Error('Author not found');
+    if (!authorToUpdate) {
+      throw new NotFoundException('Author you are trying to update does not exist');
     }
 
-    this.authors[authorIndex] = {
-      ...this.authors[authorIndex],
-      ...updateAuthorDto,
-    };
-
-    return this.authors[authorIndex];
+    return this.authorsJsonDBservice.update(id, updateAuthorDto);
   }
 
-  deleteAuthor(id: string) {
-    const authorToRemove = this.getAuthor(id);
-    const authorIndex = this.authors.findIndex((author) => author.id === id);
+  deleteAuthor(id: string): AuthorType {
+    const authorToRemove = this.authorsJsonDBservice.get(id);
 
-    if (authorIndex === -1) {
-      throw new Error('Author not found');
+    if (!authorToRemove) {
+      throw new NotFoundException('Author you are trying to delete does not exist');
     }
 
-    this.authors.splice(authorIndex, 1);
-
+    this.authorsJsonDBservice.get(id);
     return authorToRemove;
   }
 }
