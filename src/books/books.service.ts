@@ -1,73 +1,49 @@
-import { Injectable } from '@nestjs/common';
-import { CreateBookDto } from './dto/create-book.dto';
-import { UpdateBookDto } from './dto/update-book.dto';
-
-interface BookFilter {
-  genre?: string;
-  authorId?: number;
-}
+import { BooksJsonDBService } from './books-json-db.service';
+import { BooksServiceBase } from './books-abstract.service';
+import { BookType } from 'src/types/book.types';
+import { CreateBookDto, UpdateBookDto } from './dto';
+import { Injectable, NotFoundException } from '@nestjs/common';
 
 @Injectable()
-export class BooksService {
-  private books = [];
+export class BooksService implements BooksServiceBase {
+  constructor(private readonly booksJsonDBService: BooksJsonDBService) {}
 
-  getBooks({ genre, authorId }: BookFilter) {
-    const filteredBooks = this.books.filter((book) => {
-      const matchedGenre = genre ? book.genre === genre : true;
-      const matchedAuthor = authorId ? book.authorId === authorId : true;
-      return matchedGenre && matchedAuthor;
-    });
-
-    return filteredBooks;
+  getBooks(bookFilter: Partial<BookType> & { search?: string }): BookType[] {
+    return this.booksJsonDBService.getAll(bookFilter);
   }
 
-  getBook(id: string) {
-    const bookIndex = this.books.findIndex((book) => book.id === id);
+  getBook(id: string): BookType {
+    const book = this.booksJsonDBService.get(id);
 
-    if (bookIndex === -1) {
-      throw new Error('Book not found');
+    if (!book) {
+      throw new NotFoundException('Book you are trying to get does not exist');
     }
 
-    return this.books[bookIndex];
+    return book;
   }
 
-  createBook(createBookDto: CreateBookDto) {
-    const uid = () => String(Date.now().toString(32) + Math.random().toString(16)).replace(/\./g, '');
-    const newBook = {
-      ...createBookDto,
-      id: uid(),
-    };
-
-    this.books.push(newBook);
-
-    return newBook;
+  createBook(createBookDto: CreateBookDto): BookType {
+    return this.booksJsonDBService.create(createBookDto);
   }
 
-  updateBook(id: string, updateBookDto: UpdateBookDto) {
-    const bookIndex = this.books.findIndex((book) => book.id === id);
+  updateBook(id: string, updateBookDto: UpdateBookDto): BookType {
+    const book = this.booksJsonDBService.get(id);
 
-    if (bookIndex === -1) {
-      throw new Error('Book not found');
+    if (!book) {
+      throw new NotFoundException('Book you are trying to update does not exist');
     }
 
-    this.books[bookIndex] = {
-      ...this.books[bookIndex],
-      ...updateBookDto,
-    };
-
-    return this.books[bookIndex];
+    return this.booksJsonDBService.update(id, updateBookDto);
   }
 
-  deleteBook(id: string) {
-    const bookToRemove = this.getBook(id);
-    const bookIndex = this.books.findIndex((book) => book.id === id);
+  deleteBook(id: string): BookType {
+    const bookToRemove = this.booksJsonDBService.get(id);
 
-    if (bookIndex === -1) {
-      throw new Error('Book not found');
+    if (!bookToRemove) {
+      throw new NotFoundException('Book you are trying to delete does not exist');
     }
 
-    this.books.splice(bookIndex, 1);
-
+    this.booksJsonDBService.delete(id);
     return bookToRemove;
   }
 }
