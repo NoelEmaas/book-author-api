@@ -49,4 +49,11 @@ The API exposes the following endpoints:
 | `DELETE /authors/:id` | Delete existing author by ID. |
 
 
+## Structure & Logic
+![diagram-export-7-7-2024-11_07_19-PM](https://github.com/NoelEmaas/book-author-api/assets/90034393/603cb94c-dde3-4dd7-8047-dd8d295fa959)
+
+
+
+
+
 
