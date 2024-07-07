@@ -7,5 +7,7 @@ export abstract class BooksServiceBase {
   abstract createBook(createBookDto: CreateBookDto): BookType;
   abstract updateBook(id: string, updateBookDto: UpdateBookDto): BookType;
   abstract deleteBook(id: string): void;
+  abstract addAuthorToBook(bookId: string, authorId: string): BookType;
+  abstract removeAuthorFromBook(bookId: string, authorId: string): BookType;
 }
 
