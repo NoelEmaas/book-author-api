@@ -1,6 +1,6 @@
 import { AuthorType } from 'src/types/author.types';
 import { CreateAuthorDto, UpdateAuthorDto } from './dto';
-import { generateID, loadDataFromJSON } from 'src/lib/utils';
+import { generateID, loadDataFromJSON } from 'src/common/helpers/utils';
 import { Injectable } from '@nestjs/common';
 
 @Injectable()
