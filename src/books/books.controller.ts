@@ -1,19 +1,23 @@
-import { Body, Delete, Get, Param, Post, Put, ValidationPipe } from '@nestjs/common';
-import { Controller, Query } from '@nestjs/common';
+import { Body, Delete, Get, Inject, Param, Post, Put, ValidationPipe } from '@nestjs/common';
 import { BooksService } from './books.service';
-import { CreateBookDto } from './dto/create-book.dto';
-import { UpdateBookDto } from './dto/update-book.dto';
+import { BooksServiceBase } from './books-abstract.service';
+import { Controller, Query } from '@nestjs/common';
+import { CreateBookDto, UpdateBookDto } from './dto';
 
 @Controller('books')
 export class BooksController {
-  constructor(private readonly booksService: BooksService) {}
+  constructor(
+    @Inject(BooksService)
+    private readonly booksService: BooksServiceBase
+  ) {}
 
   @Get()
   getBooks(
+    @Query('search') search: string,
     @Query('genre') genre: string,
-    @Query('authorId') authorId: number,
+    @Query('authorIds') authorIds: string[],
   ) {
-    return this.booksService.getBooks({ genre, authorId });
+    return this.booksService.getBooks({ search, genre, authorIds });
   }
 
   @Get(':id')
