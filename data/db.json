@@ -1,35 +1,35 @@
 {
   "authors": [
     {
-      "id": "1",
+      "id": "a1",
       "fullName": "John Smith",
       "penName": "J. Smith",
       "genres": ["Fiction", "Adventure"],
       "averageRating": 4.5
     },
     {
-      "id": "2",
+      "id": "a2",
       "fullName": "Jane Doe",
       "penName": "J. Doe",
       "genres": ["Mystery", "Thriller"],
       "averageRating": 3.9
     },
     {
-      "id": "3",
+      "id": "a3",
       "fullName": "Emily Johnson",
       "penName": "E. Johnson",
       "genres": ["Romance", "Drama"],
       "averageRating": 4.2
     },
     {
-      "id": "4",
+      "id": "a4",
       "fullName": "Michael Brown",
       "penName": "M. Brown",
       "genres": ["Fiction", "Fantasy"],
       "averageRating": 4.8
     },
     {
-      "id": "5",
+      "id": "a5",
       "fullName": "Linda Wilson",
       "penName": "L. Wilson",
       "genres": ["Horror", "Suspense"],
@@ -71,7 +71,7 @@
     },
     {
       "id": "5",
-      "authorIds": ["a5", "a6"],
+      "authorIds": ["a5", "a3"],
       "title": "History of Ancient Rome",
       "description": "A comprehensive study of the rise and fall of the Roman Empire.",
       "genre": "History",

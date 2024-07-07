@@ -31,7 +31,10 @@ export class BooksController {
   }
 
   @Put(':id')
-  updateBook(@Param('id') id: string, @Body(new ValidationPipe()) updateBookDto: UpdateBookDto) {
+  updateBook(
+    @Param('id') id: string, 
+    @Body(new ValidationPipe()) updateBookDto: UpdateBookDto
+  ) {
     return this.booksService.updateBook(id, updateBookDto);
   }
 
@@ -40,4 +43,20 @@ export class BooksController {
     return this.booksService.deleteBook(id);
   }
 
+  @Post(':bookId/authors')
+  addAuthorToBook(
+    @Param('bookId') bookId: string, 
+    @Body('authorId') authorId: string
+  ) {
+    return this.booksService.addAuthorToBook(bookId, authorId);
+  }
+
+  @Delete(':bookId/authors')
+  removeAuthorFromBook(
+    @Param('bookId') bookId: string, 
+    @Body('authorId') authorId: string
+  ) {
+    return this.booksService.removeAuthorFromBook(bookId, authorId);
+  }
 }
+

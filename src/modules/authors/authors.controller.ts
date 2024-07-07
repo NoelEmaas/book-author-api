@@ -24,6 +24,11 @@ export class AuthorsController {
     return this.authorsService.getAuthor(id);
   }
 
+  @Get(':id/books')
+  getAuthoredBooks(@Param('id') id: string) {
+    return this.authorsService.getAuthoredBooks(id);
+  }
+
   @Post()
   createAuthor(@Body(new ValidationPipe()) createAuthorDto: CreateAuthorDto) {
     return this.authorsService.createAuthor(createAuthorDto);
