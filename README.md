@@ -39,8 +39,8 @@ The API exposes the following endpoints:
 | `/authors` | GET | <pre>-</pre> | Get all authors. <tr></tr>|
 | `/authors/:id` | GET | <pre>-</pre> | Get specific author by ID. <tr></tr>|
 | `/authors/:id/books` | GET | <pre>-</pre> | Get all authored books by author's ID. <tr></tr>|
-| `/authors` | POST | <pre>{<br/>&nbsp;"name": "string", <br/>&nbsp;"bio": "string" <br/>}</pre> | Create new author. <tr></tr>|
-| `/authors/:id` | PUT | <pre>{<br/>&nbsp;"name": "string", <br/>&nbsp;"bio": "string" <br/>}</pre> | Update existing author by ID. <tr></tr>|
+| `/authors` | POST | <pre>{<br/>&nbsp;"fullName": "string", <br/>&nbsp;"penName": "string", <br/>&nbsp;"genres"?: ["string"], <br/>&nbsp;"averageRating"?: number <br/>}</pre> | Create new author. <tr></tr>|
+| `/authors/:id` | PUT | <pre>{<br/>&nbsp;"fullName": "string", <br/>&nbsp;"penName": "string", <br/>&nbsp;"genres"?: ["string"], <br/>&nbsp;"averageRating"?: number <br/>}</pre> | Update existing author by ID. <tr></tr>|
 | `/authors/:id` | DELETE | <pre>-</pre> | Delete existing author by ID.|
 
 ## Structure & Logic
