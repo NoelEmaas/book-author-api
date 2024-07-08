@@ -27,26 +27,21 @@ $ npm run start:prod
 ## Usage
 The API exposes the following endpoints:
 
-### Books
 | Endpoint | Method | Request Body | Information |
 | :--- | :--- | :--- | :--- |
-| `/books` | GET | - | Get all books. |
-| `/books/:id` | GET | - | Get specific book by ID. |
-| `/books` | POST | `{ "title": "string", "description": "string", "authorIds": ["string"] }` | Create new book. |
-| `/books/:id` | PUT | `{ "title": "string", "description": "string", "authorIds": ["string"] }` | Update existing book by ID. |
-| `/books/:id` | DELETE | - | Delete existing book by ID. |
-| `/books/:id/authors` | POST | `{ "authorId": "string" }` | Add author to a book by ID. |
-| `/books/:id/authors` | DELETE | `{ "authorId": "string" }` | Delete author from a book by ID. |
-
-### Authors
-| Endpoint | Method | Request Body | Information |
-| :--- | :--- | :--- | :--- |
-| `/authors` | GET | - | Get all authors. |
-| `/authors/:id` | GET | - | Get specific author by ID. |
-| `/authors/:id/books` | GET | - | Get all authored books by author's ID. |
-| `/authors` | POST | `{ "name": "string", "bio": "string" }` | Create new author. |
-| `/authors/:id` | PUT | `{ "name": "string", "bio": "string" }` | Update existing author by ID. |
-| `/authors/:id` | DELETE | - | Delete existing author by ID. |
+| `/books` | GET | <pre>-</pre> | Get all books. <tr></tr>|
+| `/books/:id` | GET | <pre>-</pre> | Get specific book by ID. <tr></tr>|
+| `/books` | POST | <pre>{<br/>&nbsp;"title": "string", <br/>&nbsp;"description": "string", <br/>&nbsp;"authorIds": ["string"], <br/>&nbsp;"genre"?: "string", <br/>&nbsp;"rating"?: number <br/>}</pre> | Create new book. <tr></tr>|
+| `/books/:id` | PUT | <pre>{<br/>&nbsp;"title": "string", <br/>&nbsp;"description": "string", <br/>&nbsp;"authorIds": ["string"], <br/>&nbsp;"genre"?: "string", <br/>&nbsp;"rating"?: number <br/>}</pre> | Update existing book by ID. <tr></tr>|
+| `/books/:id` | DELETE | <pre>-</pre> | Delete existing book by ID. <tr></tr>|
+| `/books/:id/authors` | POST | <pre>{<br/>&nbsp;"authorId": "string" <br/>}</pre> | Add author to a book by ID. <tr></tr>|
+| `/books/:id/authors` | DELETE | <pre>{<br/>&nbsp;"authorId": "string" <br/>}</pre> | Delete author from a book by ID. <tr></tr>|
+| `/authors` | GET | <pre>-</pre> | Get all authors. <tr></tr>|
+| `/authors/:id` | GET | <pre>-</pre> | Get specific author by ID. <tr></tr>|
+| `/authors/:id/books` | GET | <pre>-</pre> | Get all authored books by author's ID. <tr></tr>|
+| `/authors` | POST | <pre>{<br/>&nbsp;"name": "string", <br/>&nbsp;"bio": "string" <br/>}</pre> | Create new author. <tr></tr>|
+| `/authors/:id` | PUT | <pre>{<br/>&nbsp;"name": "string", <br/>&nbsp;"bio": "string" <br/>}</pre> | Update existing author by ID. <tr></tr>|
+| `/authors/:id` | DELETE | <pre>-</pre> | Delete existing author by ID.|
 
 ## Structure & Logic
 ![diagram-export-7-7-2024-11_07_19-PM](https://github.com/NoelEmaas/book-author-api/assets/90034393/603cb94c-dde3-4dd7-8047-dd8d295fa959)
