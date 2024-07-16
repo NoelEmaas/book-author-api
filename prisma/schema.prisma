@@ -9,27 +9,20 @@ datasource db {
 
 model Author {
   id String @id @default(auto()) @map("_id") @db.ObjectId
-  name String
+  fullName String
   penName String
   genres String[]
   averageRating Int
-  books BookAuthor[]
+  bookIDs String[] @db.ObjectId
+  books Book[] @relation(fields: [bookIDs], references: [id])
 }
 
 model Book {
   id String @id @default(auto()) @map("_id") @db.ObjectId
-  authors BookAuthor[]
   title String
   description String
-  genre String[]
+  genre String
   rating Int
-}
-
-model BookAuthor {
-  id String @id @default(auto()) @map("_id") @db.ObjectId
-  authorId String @db.ObjectId
-  bookId String @db.ObjectId
-  author Author @relation(fields: [authorId], references: [id])
-  book Book @relation(fields: [bookId], references: [id])
-  @@index([authorId, bookId], name: "author_book_idx")
+  authorIDs String[] @db.ObjectId
+  authors Author[] @relation(fields: [authorIDs], references: [id])
 }
