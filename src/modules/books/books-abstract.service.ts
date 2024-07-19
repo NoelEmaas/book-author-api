@@ -1,13 +1,15 @@
-import { BookType } from "src/types/book.types";
+import { AuthorEntity } from "../authors/entities/author.entity";
 import { CreateBookDto, UpdateBookDto } from "./dto";
+import { BookEntity } from "./entities/book.entity";
 
 export abstract class BooksServiceBase {
-  abstract getBooks(bookFilter: Partial<BookType> & { search?: string }): BookType[];
-  abstract getBook(id: string): BookType | null;
-  abstract createBook(createBookDto: CreateBookDto): BookType;
-  abstract updateBook(id: string, updateBookDto: UpdateBookDto): BookType;
-  abstract deleteBook(id: string): void;
-  abstract addAuthorToBook(bookId: string, authorId: string): BookType;
-  abstract removeAuthorFromBook(bookId: string, authorId: string): BookType;
+  abstract getBooks(bookFilter: { search: string, genre: string, authorIds: string[] }): Promise<BookEntity[]>;
+  abstract getBook(id: string): Promise<BookEntity | null>;
+  abstract getBookAuthors(id: string): Promise<AuthorEntity[]>;
+  abstract createBook(createBookDto: CreateBookDto): Promise<BookEntity>;
+  abstract addBookAuthors(id: string, authorIds: string[]): Promise<AuthorEntity[]>;
+  abstract removeBookAuthors(id: string, authorIds: string[]): Promise<AuthorEntity[]>;
+  abstract updateBook(id: string, updateBookDto: UpdateBookDto): Promise<BookEntity>;
+  abstract deleteBook(id: string): Promise<BookEntity>;
 }
 
