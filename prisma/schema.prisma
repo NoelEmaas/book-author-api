@@ -8,21 +8,29 @@ datasource db {
 }
 
 model Author {
-  id String @id @default(auto()) @map("_id") @db.ObjectId
-  fullName String
-  penName String
-  genres String[]
+  id            String       @id @default(auto()) @map("_id") @db.ObjectId
+  fullName      String
+  penName       String
+  genres        String[]
   averageRating Int
-  bookIDs String[] @db.ObjectId
-  books Book[] @relation(fields: [bookIDs], references: [id])
+  books         AuthorBook[]
 }
 
 model Book {
-  id String @id @default(auto()) @map("_id") @db.ObjectId
-  title String
+  id          String       @id @default(auto()) @map("_id") @db.ObjectId
+  title       String
   description String
-  genre String
-  rating Int
-  authorIDs String[] @db.ObjectId
-  authors Author[] @relation(fields: [authorIDs], references: [id])
+  genre       String
+  rating      Int
+  authors     AuthorBook[]
+}
+
+model AuthorBook {
+  id       String @id @default(auto()) @map("_id") @db.ObjectId
+  author   Author @relation(fields: [authorId], references: [id])
+  authorId String @db.ObjectId
+  book     Book   @relation(fields: [bookId], references: [id])
+  bookId   String @db.ObjectId
+
+  @@unique([authorId, bookId])
 }
