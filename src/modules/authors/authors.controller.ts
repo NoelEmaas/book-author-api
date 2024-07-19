@@ -34,8 +34,27 @@ export class AuthorsController {
     return this.authorsService.createAuthor(createAuthorDto);
   }
 
+  @Post(':id/books')
+  addAuthoredBooks(
+    @Param('id') id: string, 
+    @Body('bookIds') bookIds: string[]
+  ) {
+    return this.authorsService.addAuthoredBooks(id, bookIds);
+  }
+
+  @Delete(':id/books')
+  removeAuthoredBooks(
+    @Param('id') id: string, 
+    @Body('bookIds') bookIds: string[]
+  ) {
+    return this.authorsService.removeAuthoredBooks(id, bookIds);
+  }
+
   @Put(':id')
-  updateAuthor(@Param('id') id: string, @Body(new ValidationPipe()) updateAuthorDto: CreateAuthorDto) {
+  updateAuthor(
+    @Param('id') id: string, 
+    @Body(new ValidationPipe()) updateAuthorDto: CreateAuthorDto
+  ) {
     return this.authorsService.updateAuthor(id, updateAuthorDto);
   }
 
