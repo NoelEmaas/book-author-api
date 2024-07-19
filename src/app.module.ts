@@ -4,9 +4,10 @@ import { AuthorsModule } from './modules/authors/authors.module';
 import { BooksModule } from './modules/books/books.module';
 import { LoggerMiddleware } from './common/middleware/logger.middleware';
 import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
+import { PrismaModule } from './modules/prisma/prisma.module';
 
 @Module({
-  imports: [BooksModule, AuthorsModule],
+  imports: [BooksModule, AuthorsModule, PrismaModule],
   controllers: [AppController],
   providers: [AppService],
 })

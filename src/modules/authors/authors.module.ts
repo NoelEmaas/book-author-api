@@ -1,14 +1,14 @@
 import { AuthorsController } from './authors.controller';
+import { AuthorsDBLibModule } from 'src/libs/authors-db-service-lib/authors-db-lib.module';
 import { AuthorsService } from './authors.service';
-import { AuthorsJsonDBService } from './authors-json-db.service';
-import { BooksModule } from '../books/books.module';
-import { forwardRef, Module } from '@nestjs/common';
+import { Module } from '@nestjs/common';
+import { PrismaModule } from '../prisma/prisma.module';
+import { BookAuthorDBLibModule } from 'src/libs/book-author-db-service-lib/book-author-db.lib.module';
 
 @Module({
-  imports: [forwardRef(() => BooksModule)],
+  imports: [AuthorsDBLibModule, BookAuthorDBLibModule, PrismaModule],
   controllers: [AuthorsController],
-  providers: [AuthorsService, AuthorsJsonDBService],
-  exports: [AuthorsJsonDBService],
+  providers: [AuthorsService],
 })
 
 export class AuthorsModule {}

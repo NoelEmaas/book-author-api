@@ -1,21 +1,4 @@
-import { IsNumber, IsString, IsDate, IsNotEmpty, IsPositive, Min, Max } from 'class-validator';
+import { AuthorEntity } from '../entities/author.entity';
+import { OmitType } from '@nestjs/mapped-types';
 
-export class CreateAuthorDto {
-  id: string;
-
-  @IsString()
-  @IsNotEmpty()
-  fullName: string;
-
-  @IsString()
-  @IsNotEmpty()
-  penName: string;
-
-  genres?: string[];
-
-  @IsNumber()
-  @IsPositive()
-  @Min(0)
-  @Max(5)
-  averageRating?: number;
-}
+export class CreateAuthorDto extends OmitType(AuthorEntity, ['id']) {}

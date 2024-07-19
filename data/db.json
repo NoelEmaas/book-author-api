@@ -5,77 +5,106 @@
       "fullName": "John Smith",
       "penName": "J. Smith",
       "genres": ["Fiction", "Adventure"],
-      "averageRating": 4.5
+      "averageRating": 4
     },
     {
       "id": "a2",
       "fullName": "Jane Doe",
       "penName": "J. Doe",
       "genres": ["Mystery", "Thriller"],
-      "averageRating": 3.9
+      "averageRating": 3
     },
     {
       "id": "a3",
       "fullName": "Emily Johnson",
       "penName": "E. Johnson",
       "genres": ["Romance", "Drama"],
-      "averageRating": 4.2
+      "averageRating": 4
     },
     {
       "id": "a4",
       "fullName": "Michael Brown",
       "penName": "M. Brown",
       "genres": ["Fiction", "Fantasy"],
-      "averageRating": 4.8
+      "averageRating": 4
     },
     {
       "id": "a5",
       "fullName": "Linda Wilson",
       "penName": "L. Wilson",
       "genres": ["Horror", "Suspense"],
-      "averageRating": 3.5
+      "averageRating": 3
     }
   ],
   "books": [
     {
       "id": "1",
-      "authorIds": ["a1", "a2"],
       "title": "The Great Adventure",
       "description": "An exhilarating journey through uncharted lands.",
       "genre": "Adventure",
-      "rating": 4.8
+      "rating": 4
     },
     {
       "id": "2",
-      "authorIds": ["a3"],
       "title": "Mystery of the Lost City",
       "description": "A detective story that uncovers the secrets of an ancient civilization.",
       "genre": "Mystery",
-      "rating": 4.5
+      "rating": 4
     },
     {
       "id": "3",
-      "authorIds": ["a1", "a4"],
       "title": "Romance in Paris",
       "description": "A romantic tale set in the city of love.",
       "genre": "Romance",
-      "rating": 4.7
+      "rating": 4
     },
     {
       "id": "4",
-      "authorIds": ["a2"],
       "title": "Science of the Future",
       "description": "Exploring futuristic scientific discoveries and their implications.",
       "genre": "Science Fiction",
-      "rating": 4.6
+      "rating": 4
     },
     {
       "id": "5",
-      "authorIds": ["a5", "a3"],
       "title": "History of Ancient Rome",
       "description": "A comprehensive study of the rise and fall of the Roman Empire.",
       "genre": "History",
-      "rating": 4.9
+      "rating": 4
+    }
+  ],
+  "book_author": [
+    {
+      "bookID": "1",
+      "authorID": "a1"
+    },
+    {
+      "bookID": "1",
+      "authorID": "a2"
+    },
+    {
+      "bookID": "2",
+      "authorID": "a3"
+    },
+    {
+      "bookID": "3",
+      "authorID": "a1"
+    },
+    {
+      "bookID": "3",
+      "authorID": "a4"
+    },
+    {
+      "bookID": "4",
+      "authorID": "a2"
+    },
+    {
+      "bookID": "5",
+      "authorID": "a5"
+    },
+    {
+      "bookID": "5",
+      "authorID": "a3"
     }
   ]
 }
