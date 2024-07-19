@@ -25,9 +25,30 @@ export class BooksController {
     return this.booksService.getBook(id);
   }
 
+  @Get(':id/authors')
+  getBookAuthors(@Param('id') id: string) {
+    return this.booksService.getBookAuthors(id);
+  }
+
   @Post()
   createBook(@Body(new ValidationPipe()) createBookDto: CreateBookDto) {
     return this.booksService.createBook(createBookDto);
+  }
+
+  @Post(':id/authors')
+  addBookAuthors(
+    @Param('id') id: string, 
+    @Body('authorIds') authorIds: string[]
+  ) {
+    return this.booksService.addBookAuthors(id, authorIds);
+  }
+
+  @Delete(':id/authors')
+  removeBookAuthors(
+    @Param('id') id: string, 
+    @Body('authorIds') authorIds: string[]
+  ) {
+    return this.booksService.removeBookAuthors(id, authorIds);
   }
 
   @Put(':id')
@@ -41,22 +62,6 @@ export class BooksController {
   @Delete(':id')
   deleteBook(@Param('id') id: string) {
     return this.booksService.deleteBook(id);
-  }
-
-  @Post(':bookId/authors')
-  addAuthorToBook(
-    @Param('bookId') bookId: string, 
-    @Body('authorId') authorId: string
-  ) {
-    return this.booksService.addAuthorToBook(bookId, authorId);
-  }
-
-  @Delete(':bookId/authors')
-  removeAuthorFromBook(
-    @Param('bookId') bookId: string, 
-    @Body('authorId') authorId: string
-  ) {
-    return this.booksService.removeAuthorFromBook(bookId, authorId);
   }
 }
 
