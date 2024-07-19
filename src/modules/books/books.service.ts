@@ -1,23 +1,27 @@
-import { AuthorsJsonDBService } from '../authors/authors-json-db.service';
-import { BooksJsonDBService } from './books-json-db.service';
+import { BooksJsonDBService } from 'src/libs/books-db-service-lib/book-json-db.service';
 import { BooksServiceBase } from './books-abstract.service';
-import { BookType } from 'src/types/book.types';
+import { BookEntity } from './entities/book.entity';
+import { BooksPrismaDBService } from 'src/libs/books-db-service-lib/book-prisma-db.service';
 import { CreateBookDto, UpdateBookDto } from './dto';
-import { BadRequestException, ConflictException, Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { BookAuthorJsonDBService } from 'src/libs/book-author-db-service-lib/book-author-json-db.service';
+import { AuthorEntity } from '../authors/entities/author.entity';
+import { plainToClass } from 'class-transformer';
+import { BookAuthorPrismaDBService } from 'src/libs/book-author-db-service-lib/book-author-prisma-db.service';
 
 @Injectable()
 export class BooksService implements BooksServiceBase {
   constructor(
-    private readonly booksJsonDBService: BooksJsonDBService,
-    private readonly authorsJsonDBService: AuthorsJsonDBService
+    private readonly booksDbService: BooksPrismaDBService,
+    private readonly bookAuthorDbService: BookAuthorPrismaDBService
   ) {}
 
-  getBooks(bookFilter: Partial<BookType> & { search?: string }): BookType[] {
-    return this.booksJsonDBService.getAll(bookFilter);
+  async getBooks(bookFilter: { search: string, genre: string, authorIds: string[] }): Promise<BookEntity[]> {
+    return await this.booksDbService.getAll(bookFilter);
   }
 
-  getBook(id: string): BookType {
-    const book = this.booksJsonDBService.get(id);
+  async getBook(id: string): Promise<BookEntity> {
+    const book = await this.booksDbService.get(id);
 
     if (!book) {
       throw new NotFoundException('Book you are trying to get does not exist');
@@ -26,67 +30,60 @@ export class BooksService implements BooksServiceBase {
     return book;
   }
 
-  createBook(createBookDto: CreateBookDto): BookType {
-    return this.booksJsonDBService.create(createBookDto);
+  async getBookAuthors(id: string): Promise<AuthorEntity[]> {
+    const book = await this.booksDbService.get(id);
+
+    if (!book) {
+      throw new NotFoundException('Book you are trying to get authors does not exist');
+    }
+
+    return await this.bookAuthorDbService.getAllAuthorsFromBook(id);
   }
 
-  updateBook(id: string, updateBookDto: UpdateBookDto): BookType {
-    const book = this.booksJsonDBService.get(id);
+  async createBook(createBookDto: CreateBookDto): Promise<BookEntity> {
+    return await this.booksDbService.create(createBookDto);
+  }
+
+  async addBookAuthors(id: string, authorIds: string[]): Promise<AuthorEntity[]> {
+    const book = await this.booksDbService.get(id);
+
+    if (!book) {
+      throw new NotFoundException('Book you are trying to add authors does not exist');
+    }
+
+    await this.bookAuthorDbService.associateAuthorsToBook(id, authorIds);
+    return await this.getBookAuthors(id);
+  }
+
+  async removeBookAuthors(id: string, authorIds: string[]): Promise<AuthorEntity[]> {
+    const book = await this.booksDbService.get(id);
+
+    if (!book) {
+      throw new NotFoundException('Book you are trying to remove authors does not exist');
+    }
+
+    await this.bookAuthorDbService.disassociateAuthorsFromBook(id, authorIds);
+    return await this.getBookAuthors(id);
+  }
+
+  async updateBook(id: string, updateBookDto: UpdateBookDto): Promise<BookEntity> {
+    const book = await this.booksDbService.get(id);
 
     if (!book) {
       throw new NotFoundException('Book you are trying to update does not exist');
     }
 
-    return this.booksJsonDBService.update(id, updateBookDto);
+    return await this.booksDbService.update(id, updateBookDto);
   }
 
-  deleteBook(id: string): BookType {
-    const bookToRemove = this.booksJsonDBService.get(id);
+  async deleteBook(id: string): Promise<BookEntity> {
+    const bookToRemove = await this.booksDbService.get(id);
 
     if (!bookToRemove) {
       throw new NotFoundException('Book you are trying to delete does not exist');
     }
 
-    this.booksJsonDBService.delete(id);
+    await this.booksDbService.delete(id);
     return bookToRemove;
-  }
-
-  addAuthorToBook(bookId: string, authorId: string): BookType {
-    const book = this.booksJsonDBService.get(bookId);
-    const author = this.authorsJsonDBService.get(authorId);
-
-    if (!author) {
-      throw new NotFoundException('Author you are trying to add to book does not exist');
-    }
-
-    if (!book) {
-      throw new NotFoundException('Book you are trying to add author to does not exist');
-    }
-
-    if (book.authorIds.includes(authorId)) {
-      throw new ConflictException('Author you are trying to add to book already exists');
-    }
-
-    book.authorIds.push(authorId);
-    return this.booksJsonDBService.update(bookId, book);
-  }
-
-  removeAuthorFromBook(bookId: string, authorId: string): BookType {
-    const book = this.booksJsonDBService.get(bookId);
-
-    if (!book) {
-      throw new NotFoundException('Book you are trying to remove author from does not exist');
-    }
-
-    if (!book.authorIds.includes(authorId)) {
-      throw new NotFoundException('Author you are trying to remove from book does not exist');
-    }
-
-    if (book.authorIds.length === 1) {
-      throw new BadRequestException('Book must have at least one author');
-    }
-
-    book.authorIds = book.authorIds.filter((id) => id !== authorId);
-    return this.booksJsonDBService.update(bookId, book);
   }
 }
