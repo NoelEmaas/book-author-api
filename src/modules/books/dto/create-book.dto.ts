@@ -1,24 +1,4 @@
-import { IsNumber, IsString, IsNotEmpty, IsPositive, IsArray, ArrayNotEmpty } from 'class-validator';
+import { BookEntity } from '../entities/book.entity';
+import { OmitType } from '@nestjs/mapped-types';
 
-export class CreateBookDto {
-  id: string;
-
-  @ArrayNotEmpty()
-  authorIds: string[];
-
-  @IsString()
-  @IsNotEmpty()
-  title: string;
-
-  @IsString()
-  @IsNotEmpty()
-  description: string;
-
-  @IsString()
-  @IsNotEmpty()
-  genre: string;
-
-  @IsNumber()
-  @IsPositive()
-  rating: number;
-}
+export class CreateBookDto extends OmitType(BookEntity, ['id']) {}
