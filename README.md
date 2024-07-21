@@ -24,6 +24,9 @@ $ npm run start:dev
 $ npm run start:prod
 ```
 
+You can also view all the API end points using **Swagger** by accessing:
+`http://localhost:3000/api`
+
 ## Usage
 The API exposes the following endpoints:
 
