@@ -45,7 +45,7 @@ The API exposes the following endpoints:
 | `/authors/:id/books` | GET | <pre>-</pre> | Get all authored books by author's ID. <tr></tr>|
 | `/authors` | POST | <pre>{<br/>&nbsp;"fullName": "string", <br/>&nbsp;"penName": "string", <br/>&nbsp;"genres"?: ["string"], <br/>&nbsp;"averageRating"?: number <br/>}</pre> | Create new author. <tr></tr>|
 | `/authors/:id` | PUT | <pre>{<br/>&nbsp;"fullName": "string", <br/>&nbsp;"penName": "string", <br/>&nbsp;"genres"?: ["string"], <br/>&nbsp;"averageRating"?: number <br/>}</pre> | Update existing author by ID. <tr></tr>|
-| `/authors/:id` | DELETE | <pre>-</pre> | Delete existing author by ID.|
+| `/authors/:id` | DELETE | <pre>-</pre> | Delete existing author by ID. <tr></tr>|
 | `/authors/:id/books` | POST |  <pre>{<br/>&nbsp;"bookIds": ["string"] <br/>}</pre> | Add book/s to an author by ID. <tr></tr>|
 | `/authors/:id/books` | DELETE |  <pre>{<br/>&nbsp;"bookIds": ["string"] <br/>}</pre> | Delete book/s from an author by ID. |
 
